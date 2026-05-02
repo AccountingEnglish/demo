@@ -1,0 +1,492 @@
+/* ============================================================
+ * components.css - 再利用可能なUIコンポーネント (v4.2)
+ *
+ * 「押したくなる」温かいボタンと丸みのあるカード。
+ * すべてのインタラクティブ要素にアニメーションを伴う。
+ * ============================================================ */
+
+/* ============================================================
+ * Buttons
+ * ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  height: 48px;
+  padding: 0 var(--sp-5);
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-md);
+  font-size: var(--fs-14);
+  font-weight: 600;
+  font-family: var(--font-sans);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  position: relative;
+  transition:
+    transform var(--d-instant) var(--ease-out),
+    background var(--d-fast) var(--ease-out),
+    box-shadow var(--d-fast) var(--ease-out),
+    border-color var(--d-fast) var(--ease-out),
+    color var(--d-fast) var(--ease-out);
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Primary: ブランドカラー塗りつぶし、影で浮き立たせる */
+.btn--primary {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  height: 56px;
+  border-radius: 14px;
+  font-size: var(--fs-15);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  box-shadow: var(--shadow-primary);
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--color-primary-deep);
+  box-shadow: 0 6px 20px rgba(200, 16, 46, 0.24);
+}
+
+.btn--primary:active:not(:disabled) {
+  background: var(--color-primary-deep);
+  box-shadow: var(--shadow-primary-press);
+  transform: scale(0.98);
+}
+
+/* Secondary: 白地に枠+微細な影 */
+.btn--secondary {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  height: 48px;
+  box-shadow: var(--shadow-xs);
+  border-radius: 12px;
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: var(--color-bg-section);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn--secondary:active:not(:disabled) {
+  background: var(--color-bg-section);
+  box-shadow: none;
+}
+
+/* Text button */
+.btn--text {
+  border: none;
+  background: none;
+  color: var(--color-primary);
+  font-size: var(--fs-13);
+  font-weight: 600;
+  height: auto;
+  padding: var(--sp-2) var(--sp-2);
+  letter-spacing: 0.04em;
+}
+
+.btn--text::after {
+  content: '›';
+  margin-left: 4px;
+  font-weight: 500;
+  transition: transform var(--d-fast) var(--ease-out);
+  display: inline-block;
+}
+
+.btn--text:hover::after {
+  transform: translateX(2px);
+}
+
+.btn--full { width: 100%; }
+.btn--small { height: 38px; padding: 0 var(--sp-4); font-size: var(--fs-13); }
+
+/* Danger button */
+.btn--danger {
+  background: var(--color-bg);
+  color: var(--color-wrong-deep);
+  border: 1px solid var(--color-wrong-soft);
+}
+
+.btn--danger:hover:not(:disabled) {
+  background: var(--color-wrong-soft);
+}
+
+/* ============================================================
+ * Pill / Chip (選択肢用、丸い)
+ * ============================================================ */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  height: 38px;
+  padding: 0 var(--sp-4);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-13);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  transition:
+    background var(--d-fast) var(--ease-out),
+    color var(--d-fast) var(--ease-out),
+    border-color var(--d-fast) var(--ease-out),
+    transform var(--d-instant) var(--ease-out),
+    box-shadow var(--d-fast) var(--ease-out);
+}
+
+.chip:hover:not(.is-active):not(:disabled) {
+  background: var(--color-bg-section);
+}
+
+.chip:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.chip.is-active {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+  font-weight: 600;
+  box-shadow: var(--shadow-primary);
+}
+
+.chip__count {
+  font-family: var(--font-tabular);
+  font-size: var(--fs-11);
+  font-variant-numeric: tabular-nums;
+  opacity: 0.65;
+  font-weight: 500;
+}
+
+.chip.is-active .chip__count {
+  opacity: 0.85;
+}
+
+/* ============================================================
+ * Card
+ * ============================================================ */
+
+.card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-xs);
+  overflow: hidden;
+  transition: box-shadow var(--d-fast) var(--ease-out);
+}
+
+.card--interactive {
+  cursor: pointer;
+}
+
+.card--interactive:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card--interactive:active {
+  transform: scale(0.99);
+  transition: transform var(--d-instant) var(--ease-out);
+}
+
+.card--padded { padding: var(--sp-5); }
+
+.card__label {
+  font-size: var(--fs-11);
+  letter-spacing: 0.12em;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* ============================================================
+ * Input
+ * ============================================================ */
+
+.input-number {
+  height: 44px;
+  padding: 0 var(--sp-4);
+  background: var(--color-bg);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--r-md);
+  font-size: var(--fs-15);
+  font-weight: 600;
+  text-align: center;
+  font-family: var(--font-tabular);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+  width: 100%;
+  -moz-appearance: textfield;
+  transition: border-color var(--d-fast) var(--ease-out);
+}
+
+.input-number::-webkit-outer-spin-button,
+.input-number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-number:focus {
+  outline: none;
+  border-color: var(--color-primary-deep);
+}
+
+.input-number.is-error {
+  border-color: var(--color-wrong);
+  color: var(--color-wrong);
+}
+
+/* ============================================================
+ * Search input
+ * ============================================================ */
+
+.search {
+  position: relative;
+  width: 100%;
+}
+
+.search__icon {
+  position: absolute;
+  left: var(--sp-4);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-tertiary);
+  pointer-events: none;
+  width: 18px;
+  height: 18px;
+}
+
+.search__input {
+  width: 100%;
+  height: 48px;
+  padding: 0 var(--sp-4) 0 calc(var(--sp-4) + 18px + 12px);
+  background: var(--color-bg-section);
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  font-size: var(--fs-14);
+  color: var(--color-text);
+  transition: background var(--d-fast) var(--ease-out),
+              border-color var(--d-fast) var(--ease-out);
+}
+
+.search__input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.search__input:focus {
+  outline: none;
+  background: var(--color-bg);
+  border-color: var(--color-primary);
+}
+
+/* ============================================================
+ * Frequency badge
+ * ============================================================ */
+
+.freq-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-11);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-tertiary);
+  background: var(--color-bg);
+}
+
+.freq-badge--high {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-deep);
+  border-color: var(--color-primary-soft);
+}
+
+.freq-badge--standard {
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+  border-color: var(--color-border);
+}
+
+.freq-badge--advanced {
+  background: var(--color-bg-section);
+  color: var(--color-text-tertiary);
+  border-color: var(--color-border);
+}
+
+/* Category pill */
+.cat-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-11);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-deep);
+}
+
+.cat-pill--neutral {
+  background: var(--color-bg-section);
+  color: var(--color-text-secondary);
+}
+
+/* ============================================================
+ * Checkbox
+ * ============================================================ */
+
+.check {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-bg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition:
+    background var(--d-fast) var(--ease-out),
+    border-color var(--d-fast) var(--ease-out),
+    transform var(--d-instant) var(--ease-out);
+}
+
+.check.is-checked {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.check svg {
+  width: 14px;
+  height: 14px;
+  color: white;
+  opacity: 0;
+  transition: opacity var(--d-fast) var(--ease-out);
+}
+
+.check.is-checked svg {
+  opacity: 1;
+}
+
+.check:active {
+  transform: scale(0.88);
+}
+
+.check--circle {
+  border-radius: var(--r-pill);
+}
+
+/* ============================================================
+ * Empty state
+ * ============================================================ */
+
+.empty {
+  text-align: center;
+  padding: var(--sp-12) var(--sp-5);
+  color: var(--color-text-tertiary);
+}
+
+.empty__title {
+  font-size: var(--fs-15);
+  font-weight: 600;
+  margin-bottom: var(--sp-2);
+  color: var(--color-text-secondary);
+}
+
+.empty__sub {
+  font-size: var(--fs-13);
+}
+
+/* ============================================================
+ * Toast
+ * ============================================================ */
+
+.toast {
+  position: fixed;
+  top: calc(var(--header-height) + var(--sp-3));
+  left: 50%;
+  transform: translateX(-50%) translateY(-12px);
+  background: var(--color-text);
+  color: var(--color-bg);
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-13);
+  font-weight: 600;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--d-base) var(--ease-out),
+              transform var(--d-base) var(--ease-bounce);
+  white-space: nowrap;
+  box-shadow: var(--shadow-lg);
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================================
+ * Animations
+ * ============================================================ */
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes correctRipple {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes drawCheck {
+  from { stroke-dashoffset: 30; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes wrongPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}

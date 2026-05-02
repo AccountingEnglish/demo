@@ -1,0 +1,270 @@
+/* ============================================================
+ * screens/list.css - 単語一覧画面 (v4.2)
+ * 上部固定レイアウト + 印刷FAB
+ * ============================================================ */
+
+.list-page {
+  position: relative;
+}
+
+/* ----------------------------------------------------------
+ * Sticky head: タイトル+検索+カテゴリチップが上部固定
+ * ---------------------------------------------------------- */
+.list-page__head {
+  position: sticky;
+  top: 0;
+  background: var(--color-bg);
+  z-index: 25;
+  padding: var(--sp-4) var(--sp-4) var(--sp-3);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.list-page__title-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-3);
+}
+
+.list-page__title {
+  font-size: var(--fs-22);
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.005em;
+}
+
+.list-page__title-count {
+  font-family: var(--font-tabular);
+  font-size: var(--fs-13);
+  color: var(--color-text-tertiary);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* === Filter chips === */
+.list-page__filters {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-3);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 2px 0;
+}
+
+.list-page__filters::-webkit-scrollbar { display: none; }
+
+/* ----------------------------------------------------------
+ * Body
+ * ---------------------------------------------------------- */
+.list-page__body {
+  background: var(--color-bg);
+  padding-bottom: 100px; /* For FAB and tab bar */
+}
+
+/* === Group === */
+.list-group {
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.list-group__head {
+  position: sticky;
+  top: 0; /* Will be overridden by inline style */
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--color-bg-section);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  z-index: 5;
+}
+
+.list-group__title {
+  font-size: var(--fs-13);
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 0.02em;
+}
+
+.list-group__count {
+  font-family: var(--font-tabular);
+  font-size: var(--fs-11);
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+/* === Row === */
+.list-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--color-border-light);
+  cursor: pointer;
+  gap: var(--sp-3);
+  transition: background var(--d-fast) var(--ease-out);
+}
+
+.list-row:last-child {
+  border-bottom: none;
+}
+
+.list-row:hover {
+  background: var(--color-bg-section);
+}
+
+.list-row:active {
+  background: var(--color-primary-faint);
+}
+
+/* In selection mode, an entire row click toggles the selection */
+.list-row.is-selectable .list-row__check-area {
+  display: flex;
+  margin-right: var(--sp-3);
+}
+
+.list-row__check-area {
+  display: none;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.list-row__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.list-row__english {
+  font-size: var(--fs-15);
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 3px;
+}
+
+.list-row__japanese {
+  font-size: var(--fs-12);
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+
+.list-row__right {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-shrink: 0;
+}
+
+/* Status dot */
+.list-row__status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-border);
+  flex-shrink: 0;
+}
+
+.list-row__status.is-learned { background: var(--color-correct); }
+.list-row__status.is-mistake { background: var(--color-wrong); }
+
+/* Selection mode bottom */
+.list-page__select-bar {
+  position: fixed;
+  bottom: calc(var(--tabbar-height) + var(--safe-area-bottom));
+  left: 0;
+  right: 0;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border-light);
+  padding: var(--sp-3) var(--sp-4);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  z-index: 45;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
+  transform: translateY(100%);
+  transition: transform var(--d-base) var(--ease-bounce);
+}
+
+.list-page__select-bar.is-visible {
+  transform: translateY(0);
+}
+
+.list-page__select-count {
+  flex: 1;
+  font-size: var(--fs-13);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.list-page__select-count strong {
+  color: var(--color-primary);
+  font-family: var(--font-tabular);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.list-page__select-cancel {
+  font-size: var(--fs-13);
+  color: var(--color-text-secondary);
+  padding: var(--sp-2) var(--sp-3);
+  font-weight: 600;
+}
+
+.list-page__select-print {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  height: 40px;
+  padding: 0 var(--sp-4);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-13);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: var(--shadow-primary);
+  transition: all var(--d-fast) var(--ease-out);
+}
+
+.list-page__select-print:hover {
+  background: var(--color-primary-deep);
+}
+
+.list-page__select-print:active {
+  transform: scale(0.96);
+}
+
+.list-page__select-print:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.list-page__select-print svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* In selection mode, FAB hides and select bar shows */
+.fab.is-hidden {
+  transform: translateX(calc(var(--max-width) / 2 - 16px - 28px)) scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 512px) {
+  .fab.is-hidden {
+    transform: scale(0);
+  }
+}
