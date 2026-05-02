@@ -1,0 +1,245 @@
+/* ============================================================
+ * screens/print.css - 印刷プレビュー画面 (v4.2)
+ *
+ * 画面表示用 + @media print 印刷時最適化
+ * ============================================================ */
+
+.print-page {
+  background: var(--color-bg-section);
+}
+
+.print-page__head {
+  padding: var(--sp-4);
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+/* === Format tabs === */
+.print-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
+}
+
+.print-tab {
+  height: 44px;
+  background: var(--color-bg-section);
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  font-size: var(--fs-13);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: all var(--d-fast) var(--ease-out);
+}
+
+.print-tab:hover:not(.is-active) {
+  background: var(--color-bg);
+}
+
+.print-tab.is-active {
+  background: var(--color-primary);
+  color: white;
+  font-weight: 700;
+  box-shadow: var(--shadow-primary);
+}
+
+.print-tab:active {
+  transform: scale(0.97);
+}
+
+.print-page__count {
+  text-align: center;
+  font-size: var(--fs-12);
+  color: var(--color-text-tertiary);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.print-page__count strong {
+  color: var(--color-primary);
+  font-family: var(--font-tabular);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+/* === Preview area === */
+.print-preview {
+  padding: var(--sp-4);
+  padding-bottom: 120px;
+}
+
+.print-sheet {
+  background: var(--color-bg);
+  border-radius: var(--r-lg);
+  padding: var(--sp-6) var(--sp-5);
+  box-shadow: var(--shadow-md);
+  min-height: 400px;
+}
+
+.print-sheet__title {
+  font-size: var(--fs-15);
+  font-weight: 700;
+  color: var(--color-text);
+  padding-bottom: var(--sp-3);
+  border-bottom: 2px solid var(--color-text);
+  margin-bottom: var(--sp-4);
+}
+
+.print-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.print-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--sp-4);
+  padding: var(--sp-3) 0;
+  border-bottom: 1px dotted var(--color-border);
+  align-items: baseline;
+}
+
+.print-row:last-child {
+  border-bottom: none;
+}
+
+.print-row__english {
+  font-size: var(--fs-13);
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.print-row__english-num {
+  color: var(--color-text-tertiary);
+  font-family: var(--font-tabular);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  margin-right: 4px;
+}
+
+.print-row__japanese {
+  font-size: var(--fs-13);
+  color: var(--color-text);
+  text-align: right;
+  font-weight: 500;
+}
+
+/* テスト用は右側を空欄に */
+.print-row--test .print-row__japanese {
+  min-width: 140px;
+  border-bottom: 1px solid var(--color-text-secondary);
+  height: 1.5em;
+  text-align: right;
+}
+
+.print-row--test .print-row__japanese-text {
+  display: none;
+}
+
+/* ----------------------------------------------------------
+ * Sticky bottom: 印刷ボタン
+ * ---------------------------------------------------------- */
+.print-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border-light);
+  padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + var(--safe-area-bottom));
+  z-index: 40;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.print-bottom__hint {
+  text-align: center;
+  font-size: var(--fs-11);
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--sp-2);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+ * @media print: 印刷時のスタイル
+ * ============================================================ */
+@media print {
+  /* 全画面リセット */
+  body {
+    background: white !important;
+    color: black !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* UI要素を全て非表示 */
+  .page-header,
+  .tabbar,
+  .fab,
+  .print-page__head,
+  .print-bottom,
+  .print-tab {
+    display: none !important;
+  }
+
+  #app {
+    max-width: 100% !important;
+    box-shadow: none !important;
+  }
+
+  /* シートだけを表示 */
+  .print-page,
+  .print-preview {
+    background: white !important;
+    padding: 0 !important;
+  }
+
+  .print-sheet {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 16mm 18mm !important;
+    background: white !important;
+    min-height: auto !important;
+  }
+
+  .print-sheet__title {
+    font-size: 14pt !important;
+    color: black !important;
+    border-bottom: 2px solid black !important;
+    padding-bottom: 8pt !important;
+    margin-bottom: 12pt !important;
+  }
+
+  .print-row {
+    page-break-inside: avoid;
+    padding: 6pt 0 !important;
+    border-bottom: 1px dotted #999 !important;
+  }
+
+  .print-row__english {
+    font-size: 11pt !important;
+    color: black !important;
+  }
+
+  .print-row__japanese {
+    font-size: 11pt !important;
+    color: black !important;
+  }
+
+  .print-row--test .print-row__japanese {
+    border-bottom: 1px solid #333 !important;
+    min-width: 120pt !important;
+  }
+
+  /* ページサイズ */
+  @page {
+    size: A4;
+    margin: 0;
+  }
+}

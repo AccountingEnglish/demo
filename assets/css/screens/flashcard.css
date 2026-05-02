@@ -1,0 +1,472 @@
+/* ============================================================
+ * screens/flashcard.css - フラッシュカード画面 (v4.2)
+ * 画像4を参考にした、ピル型ラベル+ゆとりあるカード
+ * ============================================================ */
+
+.fc {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--color-bg-section);
+}
+
+/* ----------------------------------------------------------
+ * Progress bar (上部のスリムなバー)
+ * ---------------------------------------------------------- */
+.fc__progress {
+  padding: var(--sp-3) var(--sp-4) var(--sp-1);
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.fc__progress-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: var(--fs-12);
+  color: var(--color-text-tertiary);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.fc__progress-current {
+  font-family: var(--font-tabular);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.fc__progress-total {
+  font-family: var(--font-tabular);
+  font-variant-numeric: tabular-nums;
+}
+
+.fc__progress-bar {
+  height: 4px;
+  background: var(--color-border-light);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+
+.fc__progress-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: var(--r-pill);
+  transition: width var(--d-base) var(--ease-out);
+}
+
+/* ----------------------------------------------------------
+ * Body: card area with side navigation
+ * ---------------------------------------------------------- */
+.fc__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-4) var(--sp-4);
+  min-height: 0;
+  position: relative;
+}
+
+/* Pills row(財務会計・基礎などのカテゴリラベル) */
+.fc__pills {
+  display: flex;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.fc__pill {
+  padding: 6px 14px;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-12);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.fc__pill--primary {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-deep);
+}
+
+.fc__pill--neutral {
+  background: var(--color-bg-section);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+/* ----------------------------------------------------------
+ * The card itself
+ * ---------------------------------------------------------- */
+.fc-card {
+  width: 100%;
+  max-width: 420px;
+  flex: 1;
+  max-height: 60vh;
+  background: var(--color-card);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--r-2xl);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition:
+    transform var(--d-base) var(--ease-out),
+    box-shadow var(--d-fast) var(--ease-out);
+  perspective: 1000px;
+}
+
+.fc-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.fc-card:active {
+  transform: scale(0.99);
+}
+
+.fc-card.is-flipping {
+  animation: cardFlip 280ms var(--ease-soft) both;
+}
+
+@keyframes cardFlip {
+  0%   { transform: rotateY(0deg); }
+  50%  { transform: rotateY(8deg) scale(0.98); opacity: 0.85; }
+  100% { transform: rotateY(0deg); }
+}
+
+.fc-card__know {
+  position: absolute;
+  top: var(--sp-3);
+  right: var(--sp-3);
+  font-size: var(--fs-11);
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  background: var(--color-bg-section);
+  height: 30px;
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-pill);
+  letter-spacing: 0.04em;
+  z-index: 2;
+  transition: all var(--d-fast) var(--ease-out);
+}
+
+.fc-card__know:hover {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-deep);
+}
+
+.fc-card__know:active {
+  transform: scale(0.94);
+}
+
+/* === Front face === */
+.fc-card__front {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-8) var(--sp-5);
+  text-align: center;
+}
+
+.fc-card__english {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+  color: var(--color-text);
+  word-break: break-word;
+  margin-bottom: var(--sp-8);
+}
+
+.fc-card__hint {
+  font-size: var(--fs-12);
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+/* === Back face === */
+.fc-card__back {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-6) var(--sp-5) var(--sp-4);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fc-card__english-small {
+  font-size: var(--fs-13);
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--sp-2);
+  font-weight: 500;
+}
+
+.fc-card__japanese {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.35;
+  margin-bottom: var(--sp-4);
+}
+
+.fc-card__description {
+  font-size: var(--fs-13);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--sp-4);
+  padding: var(--sp-3);
+  background: var(--color-bg-section);
+  border-radius: var(--r-md);
+}
+
+.fc-card__standards {
+  margin-top: auto;
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--color-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.fc-card__standards-label {
+  font-size: var(--fs-10);
+  letter-spacing: 0.12em;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.fc-card__standard-pill {
+  display: inline-block;
+  padding: 3px 9px;
+  font-size: var(--fs-11);
+  color: var(--color-primary-deep);
+  background: var(--color-primary-soft);
+  border-radius: var(--r-pill);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.fc-card__view-detail {
+  font-size: var(--fs-12);
+  color: var(--color-primary);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: opacity var(--d-fast) var(--ease-out);
+}
+
+.fc-card__view-detail::after {
+  content: ' ›';
+}
+
+.fc-card__view-detail:active {
+  opacity: 0.6;
+}
+
+/* ----------------------------------------------------------
+ * Navigation arrows (画像4参考: 丸い「<」「>」)
+ * ---------------------------------------------------------- */
+.fc-nav-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 60px;
+  align-items: center;
+  width: 100%;
+  max-width: 420px;
+  margin-top: var(--sp-3);
+  gap: var(--sp-3);
+}
+
+.fc-nav {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-pill);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--d-fast) var(--ease-out);
+  box-shadow: var(--shadow-xs);
+}
+
+.fc-nav:not(:disabled):hover {
+  background: var(--color-bg-section);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-primary);
+}
+
+.fc-nav:not(:disabled):active {
+  transform: scale(0.92);
+  box-shadow: none;
+}
+
+.fc-nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.fc-nav-row__hint {
+  text-align: center;
+  font-size: var(--fs-11);
+  color: var(--color-text-tertiary);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+/* ----------------------------------------------------------
+ * Footer: self-evaluation buttons
+ * ---------------------------------------------------------- */
+.fc-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-4) calc(var(--sp-4) + var(--safe-area-bottom));
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.fc-footer__btn {
+  height: 56px;
+  border-radius: var(--r-md);
+  font-size: var(--fs-15);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all var(--d-fast) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.fc-footer__btn--unknown {
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+  border: 2px solid var(--color-border);
+}
+
+.fc-footer__btn--unknown:hover {
+  background: var(--color-bg-section);
+  border-color: var(--color-text-tertiary);
+}
+
+.fc-footer__btn--unknown:active {
+  transform: scale(0.97);
+  background: var(--color-bg-cream);
+}
+
+.fc-footer__btn--known {
+  background: var(--color-primary);
+  color: white;
+  border: 2px solid var(--color-primary);
+  box-shadow: var(--shadow-primary);
+}
+
+.fc-footer__btn--known:hover {
+  background: var(--color-primary-deep);
+  border-color: var(--color-primary-deep);
+}
+
+.fc-footer__btn--known:active {
+  transform: scale(0.97);
+  box-shadow: var(--shadow-primary-press);
+}
+
+/* ----------------------------------------------------------
+ * Completion screen
+ * ---------------------------------------------------------- */
+.fc-done {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-8) var(--sp-6);
+  text-align: center;
+  gap: var(--sp-6);
+}
+
+.fc-done__celebrate {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--r-pill);
+  background: var(--color-primary-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  animation: pulse 1.4s var(--ease-soft) infinite;
+  margin-bottom: var(--sp-2);
+}
+
+.fc-done__celebrate svg {
+  width: 48px;
+  height: 48px;
+}
+
+.fc-done__title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-text);
+  margin-bottom: var(--sp-1);
+}
+
+.fc-done__sub {
+  font-size: var(--fs-14);
+  color: var(--color-text-tertiary);
+}
+
+.fc-done__stats {
+  display: flex;
+  gap: var(--sp-6);
+  margin-top: var(--sp-4);
+}
+
+.fc-done__stat {
+  text-align: center;
+  min-width: 64px;
+}
+
+.fc-done__stat-num {
+  font-family: var(--font-tabular);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.fc-done__stat-num.is-correct { color: var(--color-correct); }
+.fc-done__stat-num.is-wrong { color: var(--color-wrong); }
+
+.fc-done__stat-label {
+  font-size: var(--fs-11);
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.fc-done__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  width: 100%;
+  max-width: 320px;
+  margin-top: var(--sp-4);
+}
